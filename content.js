@@ -134,6 +134,14 @@
     return [...totals].filter(([dir, total]) => hidden.get(dir) === total).map(([dir]) => dir);
   }
 
+  function fileContainer(diff) {
+    let node = diff;
+    while (node.parentElement && node.parentElement !== document.body && node.parentElement.childElementCount === 1) {
+      node = node.parentElement;
+    }
+    return node;
+  }
+
   function applyHidden(targets) {
     for (const n of document.querySelectorAll(`.${HIDDEN}`)) if (!targets.has(n)) n.classList.remove(HIDDEN);
     for (const n of targets) if (!n.classList.contains(HIDDEN)) n.classList.add(HIDDEN);
@@ -156,7 +164,7 @@
       if (!hide || hash === linked) continue;
       hiddenPaths.add(path);
       const diff = document.getElementById(`diff-${hash}`);
-      if (diff) targets.add(diff.closest('copilot-diff-entry') || diff);
+      if (diff) targets.add(fileContainer(diff));
       for (const item of treeIndex.get(hash) || []) targets.add(item);
     }
     for (const { li, path } of tree.labelled) if (hiddenPaths.has(path)) targets.add(li);
