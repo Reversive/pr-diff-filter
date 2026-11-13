@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PR Diff Filter settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>PR Diff Filter</h1>
+        <p class="muted">
+          Each filter is a list of glob patterns, one per line. A pattern without <code>/</code> matches the file name
+          anywhere (<code>*.md</code>); a pattern with <code>/</code> matches from the repository root
+          (<code>docs/**</code>, <code>**/test/**</code>). <code>*</code> matches within one folder, <code>**</code>
+          across folders. A leading <code>/</code> anchors a file name to the root (<code>/README.md</code>), and a
+          trailing <code>/</code> means everything inside (<code>docs/</code> is <code>docs/**</code>). Braces like
+          <code>{js,ts}</code> are not supported. Turn filters on and off from the panel on a pull request.
+        </p>
+      </header>
+
+      <section id="groups"></section>
+
+      <div class="actions">
+        <button type="button" id="add">Add filter</button>
+        <span class="spacer"></span>
+        <button type="button" id="reset" class="secondary">Reset to defaults</button>
+        <button type="button" id="save" class="primary">Save</button>
+      </div>
+      <p id="status" role="status" class="muted"></p>
+
+      <section class="tester">
+        <h2 id="try-label">Try a path</h2>
+        <input id="try" aria-labelledby="try-label" type="text" placeholder="apps/api/src/users/users.service.spec.ts" spellcheck="false" />
+        <p id="try-result" class="muted"></p>
+      </section>
+    </main>
+
+    <template id="group-template">
+      <article class="group">
+        <div class="group-head">
+          <div class="icon-picker" role="radiogroup" aria-label="Icon"></div>
+          <input class="name" type="text" placeholder="Filter name" aria-label="Filter name" />
+          <button type="button" class="remove secondary">Remove</button>
+        </div>
+        <textarea class="patterns" rows="6" spellcheck="false" aria-label="Patterns, one per line"></textarea>
+      </article>
+    </template>
+
+    <script src="shared.js"></script>
+    <script src="icons.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
